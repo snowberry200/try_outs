@@ -39,52 +39,81 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<int, Widget>> retainer = [
+      {
+        1: ReturnContainer(
+          seatState: SeatState.available,
+          seat: 1,
+          selectedList: listSelected,
+          valueSetter: setValue,
+        ),
+      },
+      {
+        2: ReturnContainer(
+          seatState: SeatState.booked,
+          seat: 2,
+          selectedList: listSelected,
+          valueSetter: setValue,
+        )
+      }
+    ];
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Column(
-          children: [
-            ToggleButtons(
-              isSelected: isSelected,
-              onPressed: (index) {
-                for (int i = 0; i < isSelected.length; i++) {
-                  if (i == index) {
-                    setState(() {
-                      isSelected[i] = true;
-                    });
-                  } else {
-                    setState(() {
-                      isSelected[i] = false;
-                    });
-                  }
-                }
-              },
-              children: const <Widget>[
-                Text("for rent"),
-                Text("for sale"),
-                Text("for lease")
-              ],
-            ),
-            SizedBox.fromSize(size: const Size(50, 20)),
-            ReturnContainer(
-              seatState: SeatState.available,
-              seat: 1,
-              selectedList: listSelected,
-              valueSetter: setValue,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            ReturnContainer(
-              seatState: SeatState.booked,
-              seat: 2,
-              selectedList: listSelected,
-              valueSetter: setValue,
-            )
-          ],
-        ));
+        body: ListView(
+            children: retainer.map((containerInfo) {
+          containerInfo[1];
+          containerInfo[2];
+          return ListTile(title: containerInfo[1], subtitle: containerInfo[2]);
+        }).toList())
+
+        // Column(
+        //   children: [
+        //     Padding(
+        //       padding: const EdgeInsets.all(8.0),
+        //       child: ToggleButtons(
+        //         isSelected: isSelected,
+        //         onPressed: (index) {
+        //           for (int i = 0; i < isSelected.length; i++) {
+        //             if (i == index) {
+        //               setState(() {
+        //                 isSelected[i] = true;
+        //               });
+        //             } else {
+        //               setState(() {
+        //                 isSelected[i] = false;
+        //               });
+        //             }
+        //           }
+        //         },
+        //         children: const <Widget>[
+        //           Text("for rent"),
+        //           Text("for sale"),
+        //           Text("for lease")
+        //         ],
+        //       ),
+        //     ),
+        //     SizedBox.fromSize(size: const Size(50, 20)),
+        //     ReturnContainer(
+        //       seatState: SeatState.available,
+        //       seat: 1,
+        //       selectedList: listSelected,
+        //       valueSetter: setValue,
+        //     ),
+        //     const SizedBox(
+        //       height: 30,
+        //     ),
+        //     ReturnContainer(
+        //       seatState: SeatState.booked,
+        //       seat: 2,
+        //       selectedList: listSelected,
+        //       valueSetter: setValue,
+        //     )
+        //   ],
+        // )
+        );
   }
 
   void setValue(seat) {
